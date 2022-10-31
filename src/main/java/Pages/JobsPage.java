@@ -38,7 +38,7 @@ public class JobsPage extends BasePage {
     private static final String GOOGLE = "//*[text()='Google']";
     private static final String ErrorMess = "//*[text()='No results found! Please try different search criteria']";
     private static final String RESET_BUTTON = "//*[text()='reset']";
-    public static final String JOBS_HEADER = "//form[@class = 'search-form']";
+    public static final String JOBS_HEADER = "//*[@class = 'jobs']";
 
     public void navigateToJobsPage() {
         webDriver.get(Consts.JOBS_PAGE);
