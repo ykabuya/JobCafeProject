@@ -4,9 +4,18 @@ import Consts.Consts;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.logging.LogEntry;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class JobsPage extends BasePage {
 
@@ -21,15 +30,15 @@ public class JobsPage extends BasePage {
     private static final String TEL_AVIV = "//*[text()='Tel Aviv-Yafo, Israel']";
     private static final String CHICAGO = "//*[text()='Chicago, IL, USA']";
     private static final String NewYork = "//*[text()='New York, NY, USA']";
-    private static final String QA = "//*[text()='QA Specialist']";
-    private static final String DEVELOPER = "//*[text()='Web Developer']";
-    private static final String PROJECT_MANAGER = "//*[text()='Project Manager']";
+    private static final String QA = "//*[text()='Int QA Analyst to perform complex integrated system testing']";
+    private static final String DEVELOPER = "//*[text()='Full Stack Developer -C#/Node.js & React/Angular']";
+    private static final String PROJECT_MANAGER = "//*[text()='Senior Project Manager']";
     private static final String APPLE = "//*[text()='Apple']";
     private static final String FACEBOOK = "//*[text()='Facebook']";
     private static final String GOOGLE = "//*[text()='Google']";
     private static final String ErrorMess = "//*[text()='No results found! Please try different search criteria']";
     private static final String RESET_BUTTON = "//*[text()='reset']";
-
+    public static final String JOBS_HEADER = "//form[@class = 'search-form']";
 
     public void navigateToJobsPage() {
         webDriver.get(Consts.JOBS_PAGE);
@@ -79,14 +88,15 @@ public class JobsPage extends BasePage {
         return new JobsPage();
     }
 
-    public JobsPage clickSearchButton() {
-        clickElementByXpath(SEARCH_BUTTON);
-        return new JobsPage();
+    public void clickSearchButton() {
+        clickElementByXpath(JobsPage.SEARCH_BUTTON);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(JOBS_HEADER)));
     }
 
-    public JobsPage clickResetButton() {
-        clickElementByXpath(RESET_BUTTON);
-        return new JobsPage();
+
+    public void clickResetButton() {
+        clickElementByXpath(JobsPage.RESET_BUTTON);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(JOBS_HEADER)));
     }
 
     public boolean isTorontoOnTheScreen() throws IOException {
@@ -122,10 +132,12 @@ public class JobsPage extends BasePage {
         boolean isQAPositionOnTheScreen = elementExists(QA);
         return isQAPositionOnTheScreen;
     }
+
     public boolean isDeveloperPositionOnTheScreen() throws IOException {
         boolean isDeveloperPositionOnTheScreen = elementExists(DEVELOPER);
         return isDeveloperPositionOnTheScreen;
     }
+
     public boolean isProjectManagerPositionOnTheScreen() throws IOException {
         boolean isProjectManagerPositionOnTheScreen = elementExists(PROJECT_MANAGER);
         return isProjectManagerPositionOnTheScreen;
@@ -140,18 +152,22 @@ public class JobsPage extends BasePage {
         boolean isCompanyOnScreen = elementExists(company);
         return isCompanyOnScreen;
     }
+
     public boolean isAppleOnTheScreen() throws IOException {
         boolean isAppleOnTheScreen = elementExists(APPLE);
         return isAppleOnTheScreen;
     }
+
     public boolean isFacebookOnTheScreen() throws IOException {
         boolean isFacebookOnTheScreen = elementExists(FACEBOOK);
         return isFacebookOnTheScreen;
     }
+
     public boolean isGoogleOnTheScreen() throws IOException {
         boolean isGoogleOnTheScreen = elementExists(GOOGLE);
         return isGoogleOnTheScreen;
     }
+
     public boolean isCombinedSearchOnTheScreen() throws IOException {
         File file = captureImage(JOBS_PAGE).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(file, new File("combined_search.png"));
@@ -170,4 +186,7 @@ public class JobsPage extends BasePage {
         return error;
     }
 
+    public void waitJobsListLoaded() {
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//ul[@class='entry-meta']")));
+    }
 }

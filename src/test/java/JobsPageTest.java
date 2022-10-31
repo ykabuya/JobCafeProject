@@ -60,9 +60,8 @@ public class JobsPageTest extends UseCaseBase {
 
     @Test
     public void searchToronto() throws IOException, InterruptedException {
-        jobsPage.openJobsPage().sendLocation("Toronto").clickSearchButton();
-        jobsPage.sendLocation("Toronto").clickSearchButton();
-        Thread.sleep(10000);
+        jobsPage.openJobsPage().sendLocation("Toronto");
+        jobsPage.clickSearchButton();
         boolean isOnScreen = jobsPage.isTorontoOnTheScreen();
         assertTrue(isOnScreen);
 
@@ -70,22 +69,27 @@ public class JobsPageTest extends UseCaseBase {
 
     @Test
     public void searchTelAviv() throws IOException {
-        boolean isOnScreen = jobsPage.openJobsPage().sendLocation("Tel Aviv").clickSearchButton().isTelAvivOnTheScreen();
+        jobsPage.openJobsPage().sendLocation("Chicago");
+//        Thread.sleep(10000);
+        jobsPage.clickSearchButton();
+        boolean isOnScreen = jobsPage.isChicagoOnTheScreen();
         assertTrue(isOnScreen);
     }
 
     @Test
     public void searchChicago() throws IOException, InterruptedException {
-        jobsPage.openJobsPage().sendLocation("Chicago").clickSearchButton();
-        Thread.sleep(10000);
+        jobsPage.openJobsPage().sendLocation("Chicago");
+//        Thread.sleep(10000);
+        jobsPage.clickSearchButton();
         boolean isOnScreen = jobsPage.isChicagoOnTheScreen();
         assertTrue(isOnScreen);
     }
 
     @Test
     public void searchNewYork() throws IOException, InterruptedException {
-        jobsPage.openJobsPage().sendLocation("New York").clickSearchButton();
-        Thread.sleep(10000);
+        jobsPage.openJobsPage().sendLocation("New York");
+//        Thread.sleep(10000);
+        jobsPage.clickSearchButton();
         boolean isOnScreen = jobsPage.isNewYorkOnTheScreen();
         assertTrue(isOnScreen);
     }
@@ -102,7 +106,7 @@ public class JobsPageTest extends UseCaseBase {
     @MethodSource("dataProvider")
     public void searchPositionTest(String position, String element) throws InterruptedException {
         jobsPage.openJobsPage().sendPosition(position);
-        Thread.sleep(10000);
+//        Thread.sleep(10000);
         jobsPage.clickSearchButton();
         boolean isPositionOnScreen = jobsPage.isPositionOnScreen(element);
         assertTrue(isPositionOnScreen);
